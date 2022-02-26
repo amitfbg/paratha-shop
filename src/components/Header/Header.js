@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Cart from "../Cart/Cart";
-import MyModal from "../Modal";
 
 const Container = styled.div`
   display: flex;
@@ -26,23 +25,13 @@ const StyledIcon = styled.div`
 `;
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   return (
     <Container>
       <ContainerLeft>
         <StyledIcon>Paratha</StyledIcon>
       </ContainerLeft>
-      <ContainerRight onClick={() => setIsOpen(true)}>cart</ContainerRight>
-      <MyModal
-        title="Add Toppings"
-        open={isOpen}
-        buttonText="checkout"
-        onClose={() => setIsOpen(false)}
-        onSubmit={() => setIsOpen(false)}
-        modalStyle={{ container: { width: "80%" } }}
-      >
-        <Cart />
-      </MyModal>
+      <ContainerRight onClick={() => navigate("/cart")}>cart</ContainerRight>
     </Container>
   );
 };

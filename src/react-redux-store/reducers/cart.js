@@ -45,16 +45,21 @@ const cart = (state = initialState, action) => {
       };
     }
 
-    case "CLEAR_CART":
+    case "CLEAR_CART": {
       return {
         items: [],
         totalPrice: 0,
       };
+    }
 
-    case "REMOVE_CART_ITEM":
+    case "REMOVE_CART_ITEM": {
+      state.items.splice(action.payload, 1);
+      const updatedPrice = getTotalSum(state.items);
       return {
         ...state,
+        totalPrice: updatedPrice,
       };
+    }
 
     case "PLUS_CART_ITEM": {
       const found = state.items.findIndex(
