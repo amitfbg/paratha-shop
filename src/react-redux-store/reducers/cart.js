@@ -13,7 +13,8 @@ const getTopSum = (topArray) => {
 
 const getTotalSum = (totalItem) => {
   return totalItem.reduce((acc, currObj) => {
-    return acc + currObj.cost;
+    const currSum = currObj?.cost || 0;
+    return acc + currSum;
   }, 0);
 };
 
@@ -26,13 +27,14 @@ const cart = (state = initialState, action) => {
       const topSum = getTopSum(action.payload.top);
       let priceParatha = topSum + 50;
       let newData = {};
+      newData.priceParatha = priceParatha;
       if (found !== -1) {
-        newData = { ...state.items[found] };
+        newData = { ...newData, ...state.items[found] };
         newData.top = action.payload.top;
         newData.cost = priceParatha * state.items[found].count;
         state.items.splice(found, 1, newData);
       } else {
-        newData = { ...action.payload };
+        newData = { ...newData, ...action.payload };
         newData.cost = priceParatha;
         state.items.push(newData);
       }
@@ -55,14 +57,44 @@ const cart = (state = initialState, action) => {
       };
 
     case "PLUS_CART_ITEM": {
+      const found = state.items.findIndex(
+        (currObj) => currObj?.id === action.payload
+      );
+      let newData = {};
+      if (found !== -1) {
+        newData = { ...state.items[found] };
+        newData.count = state.items[found].count + 1;
+        newData.cost =
+          state.items[found].priceParatha * (state.items[found].count + 1);
+        state.items.splice(found, 1, newData);
+      }
+      const updatedPrice = getTotalSum(state.items);
       return {
         ...state,
+        totalPrice: updatedPrice,
       };
     }
 
     case "MINUS_CART_ITEM": {
+      const found = state.items.findIndex(
+        (currObj) => currObj?.id === action.payload
+      );
+      let newData = {};
+      if (found !== -1) {
+        if (state.items[found].count - 1 === 0) {
+          state.items.splice(found, 1);
+        } else {
+          newData = { ...state.items[found] };
+          newData.count = state.items[found].count - 1;
+          newData.cost =
+            state.items[found].priceParatha * (state.items[found].count - 1);
+          state.items.splice(found, 1, newData);
+        }
+      }
+      const updatedPrice = getTotalSum(state.items);
       return {
         ...state,
+        totalPrice: updatedPrice,
       };
     }
     default:

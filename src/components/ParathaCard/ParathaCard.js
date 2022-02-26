@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Toppings from "../toppings/Toppings";
 import MyModal from "./../Modal/index";
 import { parathaToppings } from "../../utils";
+import Counter from "../Counter/Counter";
 
 const Container = styled.div`
   height: 15rem;
@@ -16,17 +17,7 @@ const ContainerTop = styled.div`
   width: 12rem;
 `;
 const ContainerBottom = styled.div``;
-const StyledIcon = styled.div`
-  height: 4rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  svg {
-    width: 3.8rem;
-    height: 3.8rem;
-  }
-`;
+const AddToCart = styled.div``;
 
 const ParathaCard = ({ details }) => {
   const dispatch = useDispatch();
@@ -43,6 +34,8 @@ const ParathaCard = ({ details }) => {
     if (foundIdx !== -1) {
       addOnList = data.items?.[foundIdx].top;
       setCount(data.items?.[foundIdx].count);
+    } else {
+      setCount(0);
     }
     newAddOnList = toppings.map((curr) =>
       addOnList.includes[curr] ? true : false
@@ -66,26 +59,20 @@ const ParathaCard = ({ details }) => {
     }, []);
 
     const payload = { id: details, top, count: 1 };
-    console.log(payload);
+
     dispatch({ type: "ADD_TO_CART", payload: payload });
     setOpen(false);
   };
   return (
     <Container>
-      <ContainerTop>
-        <StyledIcon>{details}</StyledIcon>
-      </ContainerTop>
-      {count === 0 ? (
-        <ContainerBottom onClick={() => setOpen(true)}>
-          Add to cart
-        </ContainerBottom>
-      ) : (
-        <div>
-          <span>ADD</span>
-          {count}
-          <span>Remove</span>
-        </div>
-      )}
+      <ContainerTop>{details}</ContainerTop>
+      <ContainerBottom>
+        {count === 0 ? (
+          <AddToCart onClick={() => setOpen(true)}>Add to cart</AddToCart>
+        ) : (
+          <Counter count={count} id={details} />
+        )}
+      </ContainerBottom>
 
       <MyModal
         title="Add Toppings"
