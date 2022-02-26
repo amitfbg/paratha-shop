@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import Counter from "../Counter/Counter";
@@ -12,7 +12,10 @@ const ProductDetails = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0 1rem;
+  padding: 0.5rem 1rem;
+  &:nth-of-type(odd) {
+    background-color: #efefef;
+  }
 `;
 const Wrap = styled.div`
   width: 50%;
@@ -42,7 +45,6 @@ const Price = styled.div`
 const Cart = () => {
   const reduxCartData = useSelector((state) => state.cart);
   const [cartData, setCartData] = useState({});
-
   useEffect(() => {
     setCartData(reduxCartData);
   }, [reduxCartData]);

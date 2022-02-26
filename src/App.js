@@ -1,31 +1,22 @@
-import "./App.css";
-import Header from "./components/Header/Header";
-import ParathaCard from "./components/ParathaCard/ParathaCard";
-import { ParathaList } from "./utils";
-import styled from "styled-components";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./react-redux-store/store/configureStore";
-
-const ParathaContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 1rem;
-  flex-wrap: wrap;
-`;
+import "./App.css";
+import Home from "./pages/Home/Home.js";
+import Cart from "./components/Cart/Cart.js";
 
 function App() {
-  const parathaListArray = Object.keys(ParathaList);
   return (
     <div className="App">
-      <Provider store={store}>
-        <Header />
-        <ParathaContainer>
-          {parathaListArray?.map((currItem, idx) => {
-            return <ParathaCard details={currItem} key={currItem + idx} />;
-          })}
-        </ParathaContainer>
-      </Provider>
+      <BrowserRouter>
+        <Provider store={store}>
+          <Routes>
+            <Route path="/" element={<Home />} exact />
+            <Route path="/cart" element={<Cart />} exact />
+            <Route path="*" element={<Navigate to="/" />} exact />
+          </Routes>
+        </Provider>
+      </BrowserRouter>
     </div>
   );
 }
