@@ -6,6 +6,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Counter from "../Counter/Counter";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
+import ParathaCard from "../ParathaCard/ParathaCard";
 
 const Container = styled.div`
   background-color: #f1f3f6;
@@ -22,6 +23,7 @@ const ContainerItems = styled.div`
   height: 50vh;
   background-color: #fff;
   box-shadow: 2px 2px 10px #d3d3d3;
+  overflow: auto;
 `;
 const ProductDetails = styled.div`
   display: flex;
@@ -46,15 +48,26 @@ const Name = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: 1.25rem;
+  font-weight: bold;
 `;
 const AddOn = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: 0.75rem;
+  font-weight: 400;
 `;
 
 const Price = styled.div`
   width: 5rem;
+`;
+
+const DeleteWrap = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Delete = styled(DeleteIcon)`
@@ -104,6 +117,7 @@ const Cart = () => {
   const reduxCartData = useSelector((state) => state.cart);
   const [cartData, setCartData] = useState({});
   useEffect(() => {
+    console.log("CARTDATA", reduxCartData);
     setCartData(reduxCartData);
   }, [reduxCartData]);
 
@@ -126,10 +140,13 @@ const Cart = () => {
                 <div style={{ width: "10rem" }}>
                   <Counter count={currObj?.count} id={currObj?.id} />
                 </div>
+                <DeleteWrap>
+                  <ParathaCard details={currObj?.id} isEdit />
+                </DeleteWrap>
                 <Price>{currObj?.cost}</Price>
-                <div onClick={() => handleDelete(index)}>
+                <DeleteWrap onClick={() => handleDelete(index)}>
                   <Delete />
-                </div>
+                </DeleteWrap>
               </WrapFlex>
             </ProductDetails>
           );

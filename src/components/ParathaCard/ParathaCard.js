@@ -19,7 +19,7 @@ const ContainerTop = styled.div`
 const ContainerBottom = styled.div``;
 const AddToCart = styled.div``;
 
-const ParathaCard = ({ details }) => {
+const ParathaCard = ({ details, isEdit }) => {
   const dispatch = useDispatch();
   const toppings = parathaToppings[details] || [];
   const data = useSelector((state) => state.cart);
@@ -38,7 +38,7 @@ const ParathaCard = ({ details }) => {
       setCount(0);
     }
     newAddOnList = toppings.map((curr) =>
-      addOnList.includes[curr] ? true : false
+      addOnList.includes(curr) ? true : false
     );
     setCheckedState(newAddOnList);
   }, [data]);
@@ -63,17 +63,27 @@ const ParathaCard = ({ details }) => {
     dispatch({ type: "ADD_TO_CART", payload: payload });
     setOpen(false);
   };
-  return (
-    <Container>
-      <ContainerTop>{details}</ContainerTop>
-      <ContainerBottom>
-        {count === 0 ? (
-          <AddToCart onClick={() => setOpen(true)}>Add to cart</AddToCart>
-        ) : (
-          <Counter count={count} id={details} />
-        )}
-      </ContainerBottom>
 
+  const getContent = () => {
+    if (isEdit) {
+      return <AddToCart onClick={() => setOpen(true)}>Edit</AddToCart>;
+    }
+    return (
+      <Container>
+        <ContainerTop>{details}</ContainerTop>
+        <ContainerBottom>
+          {count === 0 ? (
+            <AddToCart onClick={() => setOpen(true)}>Add to cart</AddToCart>
+          ) : (
+            <Counter count={count} id={details} />
+          )}
+        </ContainerBottom>
+      </Container>
+    );
+  };
+  return (
+    <>
+      {getContent()}
       <MyModal
         title="Add Toppings"
         open={open}
@@ -87,7 +97,7 @@ const ParathaCard = ({ details }) => {
           toppings={toppings}
         />
       </MyModal>
-    </Container>
+    </>
   );
 };
 

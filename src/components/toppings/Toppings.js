@@ -1,26 +1,24 @@
-/* eslint-disable no-unused-vars */
-import { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
 
 const Container = styled.div`
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 1rem;
+  margin: 1rem;
 `;
 const Wrap = styled.div`
   display: flex;
-  height: 100%;
   align-items: center;
   justify-content: space-between;
 `;
 const Name = styled.div`
   display: flex;
-  height: 100%;
   align-items: center;
   justify-content: space-between;
+`;
+
+const InputDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Toppings = ({ checkedState, handleOnChange, toppings }) => {
@@ -28,18 +26,17 @@ const Toppings = ({ checkedState, handleOnChange, toppings }) => {
     <Container>
       {toppings.map((label, index) => {
         return (
-          <Wrap key={index}>
+          <Wrap key={index + label + index}>
             <Name>{label}</Name>
-            <div>
+            <InputDiv>
               <input
                 type="checkbox"
-                id={`custom-checkbox-${index}`}
                 name={label}
                 value={label}
                 checked={checkedState[index]}
                 onChange={() => handleOnChange(index)}
               />
-            </div>
+            </InputDiv>
           </Wrap>
         );
       })}
