@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Cart from "../Cart/Cart";
+import MyModal from "../Modal";
 
 const Container = styled.div`
   display: flex;
@@ -24,12 +26,22 @@ const StyledIcon = styled.div`
 `;
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <Container>
       <ContainerLeft>
         <StyledIcon>Paratha</StyledIcon>
       </ContainerLeft>
-      <ContainerRight>cart</ContainerRight>
+      <ContainerRight onClick={() => setIsOpen(true)}>cart</ContainerRight>
+      <MyModal
+        title="Add Toppings"
+        open={isOpen}
+        buttonText="checkout"
+        onClose={() => setIsOpen(false)}
+        onSubmit={() => setIsOpen(false)}
+      >
+        <Cart />
+      </MyModal>
     </Container>
   );
 };

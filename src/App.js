@@ -3,6 +3,8 @@ import Header from "./components/Header/Header";
 import ParathaCard from "./components/ParathaCard/ParathaCard";
 import { ParathaList } from "./utils";
 import styled from "styled-components";
+import { Provider } from "react-redux";
+import store from "./react-redux-store/store/configureStore";
 
 const ParathaContainer = styled.div`
   display: flex;
@@ -15,12 +17,14 @@ const ParathaContainer = styled.div`
 function App() {
   return (
     <div className="App">
-      <Header />
-      <ParathaContainer>
-        {ParathaList.map((currObj) => {
-          return <ParathaCard details={currObj} />;
-        })}
-      </ParathaContainer>
+      <Provider store={store}>
+        <Header />
+        <ParathaContainer>
+          {ParathaList.map((currObj) => {
+            return <ParathaCard details={currObj} key={currObj.id} />;
+          })}
+        </ParathaContainer>
+      </Provider>
     </div>
   );
 }

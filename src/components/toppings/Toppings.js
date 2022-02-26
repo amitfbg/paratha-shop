@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -21,42 +23,10 @@ const Name = styled.div`
   justify-content: space-between;
 `;
 
-const toppings = [
-  { label: "A", price: 1 },
-  { label: "B", price: 2 },
-  { label: "C", price: 3 },
-];
-
-const Toppings = () => {
-  const [checkedState, setCheckedState] = useState(
-    new Array(toppings.length).fill(false)
-  );
-
-  const [total, setTotal] = useState(0);
-
-  const handleOnChange = (position) => {
-    const updatedCheckedState = checkedState.map((item, index) =>
-      index === position ? !item : item
-    );
-
-    setCheckedState(updatedCheckedState);
-
-    const totalPrice = updatedCheckedState.reduce(
-      (sum, currentState, index) => {
-        if (currentState === true) {
-          return sum + toppings[index].price;
-        }
-        return sum;
-      },
-      0
-    );
-
-    setTotal(totalPrice);
-  };
-
+const Toppings = ({ id, checkedState, handleOnChange, toppings }) => {
   return (
     <Container>
-      {toppings.map(({ label }, index) => {
+      {toppings.map((label, index) => {
         return (
           <Wrap key={index}>
             <Name>{label}</Name>
