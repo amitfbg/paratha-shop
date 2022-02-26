@@ -39,6 +39,7 @@ const Header = () => {
         buttonText="checkout"
         onClose={() => setIsOpen(false)}
         onSubmit={() => setIsOpen(false)}
+        modalStyle={{ container: { width: "80%" } }}
       >
         <Cart />
       </MyModal>

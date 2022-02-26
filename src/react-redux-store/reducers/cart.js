@@ -28,9 +28,9 @@ const cart = (state = initialState, action) => {
       let priceParatha = topSum + 50;
       let newData = {};
       newData.priceParatha = priceParatha;
+      newData.top = action.payload.top;
       if (found !== -1) {
-        newData = { ...newData, ...state.items[found] };
-        newData.top = action.payload.top;
+        newData = { ...state.items[found], ...newData };
         newData.cost = priceParatha * state.items[found].count;
         state.items.splice(found, 1, newData);
       } else {
