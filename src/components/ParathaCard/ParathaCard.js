@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import Toppings from "../toppings/Toppings";
 import MyModal from "./../Modal/index";
+import { parathaToppings } from "../../utils";
 
 const Container = styled.div`
   height: 15rem;
@@ -27,37 +28,33 @@ const StyledIcon = styled.div`
   }
 `;
 
-const toppings = ["A", "B", "C"];
-
 const ParathaCard = ({ details }) => {
-  const { id, label } = details;
-  const data = useSelector((state) => state.cart).items;
   const dispatch = useDispatch();
+  const toppings = parathaToppings[details] || [];
+  const data = useSelector((state) => state.cart);
   const [open, setOpen] = useState(false);
   const [checkedState, setCheckedState] = useState();
-  const [count, setCount] = useState(data?.[id]?.count || 0);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const selectedTop = data.findIndex((curr) => curr?.id === id);
-    let inputStatus = [];
-    if (selectedTop !== -1) {
-      inputStatus = data[selectedTop].top;
+    const foundIdx = data.items?.findIndex((curr) => curr?.id === details);
+    let newAddOnList = [];
+    let addOnList = [];
+    if (foundIdx !== -1) {
+      addOnList = data.items?.[foundIdx].top;
+      setCount(data.items?.[foundIdx].count);
     }
-    inputStatus = toppings.map((curr) =>
-      inputStatus.includes[curr] ? true : false
+    newAddOnList = toppings.map((curr) =>
+      addOnList.includes[curr] ? true : false
     );
-    setCheckedState(inputStatus);
-  }, [data, id]);
+    setCheckedState(newAddOnList);
+  }, [data]);
 
   const handleOnChange = (position) => {
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
     setCheckedState(updatedCheckedState);
-  };
-
-  const handleChange = () => {
-    setOpen(!open);
   };
 
   const handleAdd = () => {
@@ -67,17 +64,21 @@ const ParathaCard = ({ details }) => {
       }
       return acc;
     }, []);
-    const payload = { id, top, count: 1 };
+
+    const payload = { id: details, top, count: 1 };
+    console.log(payload);
     dispatch({ type: "ADD_TO_CART", payload: payload });
     setOpen(false);
   };
   return (
-    <Container key={id}>
+    <Container>
       <ContainerTop>
-        <StyledIcon>{label}</StyledIcon>
+        <StyledIcon>{details}</StyledIcon>
       </ContainerTop>
       {count === 0 ? (
-        <ContainerBottom onClick={handleChange}>Add to cart</ContainerBottom>
+        <ContainerBottom onClick={() => setOpen(true)}>
+          Add to cart
+        </ContainerBottom>
       ) : (
         <div>
           <span>ADD</span>
@@ -94,7 +95,6 @@ const ParathaCard = ({ details }) => {
         onSubmit={() => handleAdd()}
       >
         <Toppings
-          id={id}
           checkedState={checkedState}
           handleOnChange={handleOnChange}
           toppings={toppings}

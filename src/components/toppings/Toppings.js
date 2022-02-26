@@ -23,7 +23,7 @@ const Name = styled.div`
   justify-content: space-between;
 `;
 
-const Toppings = ({ id, checkedState, handleOnChange, toppings }) => {
+const Toppings = ({ checkedState, handleOnChange, toppings }) => {
   return (
     <Container>
       {toppings.map((label, index) => {

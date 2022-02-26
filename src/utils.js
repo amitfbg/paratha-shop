@@ -1,7 +1,24 @@
-export const ParathaList = [
-  { id: 1, label: "Plain paratha + Yogurt", price: 40 },
-  { id: 2, label: "Aalo Paratha ", price: 50 },
-  { id: 3, label: "Veg Paratha", price: 50 },
-  { id: 4, label: "Double Cheese Paratha", price: 70 },
-  { id: 5, label: "Corn Cheese Paratha", price: 80 },
-];
+export const ParathaList = {
+  "Plain paratha + Yogurt": 40,
+  "Aalo Paratha": 50,
+  "Veg Paratha": 50,
+  "Double Cheese Paratha": 70,
+  "Corn Cheese Paratha": 80,
+};
+
+export const parathaToppings = {
+  "Plain paratha + Yogurt": ["Extra Sauce"],
+  "Aalo Paratha": ["Extra Sauce", "Yogurt", "Cheese"],
+  "Veg Paratha": ["Corn", "Cabbage", "Fenugreek", "Cheese"],
+  "Double Cheese Paratha": ["Extra Sauce", "Yogurt", "Corn"],
+  "Corn Cheese Paratha": ["Extra Sauce", "Yogurt", "Cheese"],
+};
+
+export const toppingsPrics = {
+  "Extra Sauce": 5,
+  Yogurt: 15,
+  Cheese: 20,
+  Corn: 10,
+  Cabbage: 15,
+  Fenugreek: 10,
+};

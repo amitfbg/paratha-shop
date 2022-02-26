@@ -1,17 +1,13 @@
+import { toppingsPrics } from "../../utils";
+
 const initialState = {
   items: [],
   totalPrice: 0,
 };
 
-const toplins = {
-  A: 1,
-  B: 2,
-  C: 3,
-};
-
 const getTopSum = (topArray) => {
   return topArray.reduce((acc, curr) => {
-    return acc + toplins[curr];
+    return acc + toppingsPrics[curr];
   }, 0);
 };
 

@@ -15,13 +15,14 @@ const ParathaContainer = styled.div`
 `;
 
 function App() {
+  const parathaListArray = Object.keys(ParathaList);
   return (
     <div className="App">
       <Provider store={store}>
         <Header />
         <ParathaContainer>
-          {ParathaList.map((currObj) => {
-            return <ParathaCard details={currObj} key={currObj.id} />;
+          {parathaListArray?.map((currItem, idx) => {
+            return <ParathaCard details={currItem} key={currItem + idx} />;
           })}
         </ParathaContainer>
       </Provider>
