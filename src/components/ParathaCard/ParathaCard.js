@@ -6,21 +6,20 @@ import MyModal from "./../Modal/index";
 import Counter from "../Counter/Counter";
 
 const Container = styled.div`
-  height: 20rem;
-  width: calc(24.8% - 3rem);
+  flex: 15%;
   padding: 1rem;
   background-color: #f6f8fa;
   margin: 0.5rem;
   border: solid 1px #f6f8fa;
   box-shadow: 1px 1px 6px #d3d3d3;
   @media (max-width: 767.98px) {
-    width: 100%;
+    flex: 100%;
   }
   @media (min-width: 768px) and (max-width: 991.95px) {
-    width: calc(45% - 1rem);
+    flex: 40%;
   }
   @media (min-width: 992px) and (max-width: 1280px) {
-    width: calc(33% - 3rem);
+    flex: 25%;
   }
 `;
 const ContainerTop = styled.div`
@@ -29,7 +28,7 @@ const ContainerTop = styled.div`
   margin-bottom: 0.5rem;
 `;
 const ContainerCenter = styled.div`
-  height: 15rem;
+  height: 12rem;
   width: 100%;
   position: relative;
   display: flex;

@@ -7,15 +7,21 @@ import ParathaCard from "../../components/ParathaCard/ParathaCard";
 
 const Container = styled.div`
   height: 100vh;
-  width: 100vw;
+`;
+const ContainerBody = styled.div`
+  height: calc(100% - 1rem);
+  background-color: #1a202c;
+  padding-bottom: 1rem;
 `;
 
 const ParathaContainer = styled.div`
+  max-height: calc(100% - 6.5rem);
   display: flex;
   align-items: center;
   padding: 1rem;
   flex-wrap: wrap;
   background-color: #1a202c;
+  overflow: auto;
 `;
 
 function Home() {
@@ -58,7 +64,7 @@ function Home() {
       return <GeneralComponent val="Error" />;
     }
     return (
-      <>
+      <ContainerBody>
         <Header />
         <ParathaContainer>
           {parathaList.length > 0 ? (
@@ -69,7 +75,7 @@ function Home() {
             <GeneralComponent val="NoData" />
           )}
         </ParathaContainer>
-      </>
+      </ContainerBody>
     );
   };
 
