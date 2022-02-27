@@ -48,8 +48,11 @@ const ProductDetails = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem;
-  &:nth-of-type(odd) {
+  &:nth-of-type(even) {
     background-color: #efefef;
+  }
+  &:nth-of-type(odd) {
+    background-color: #c2c2c2;
   }
 `;
 const Wrap = styled.div`
