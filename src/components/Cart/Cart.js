@@ -7,6 +7,7 @@ import Counter from "../Counter/Counter";
 import { Button } from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import ParathaCard from "../ParathaCard/ParathaCard";
+import { deliveryCharges } from "../../utils";
 
 const Container = styled.div`
   background-color: #f1f3f6;
@@ -15,10 +16,27 @@ const Container = styled.div`
 `;
 
 const ContainerHead = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 2rem;
   font-weight: bold;
   padding: 2rem 0 1rem;
 `;
+
+const ClearCart = styled.div`
+  color: #000000;
+  min-width: 3rem;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #d3d3d3;
+  padding: 0.5rem;
+  cursor: pointer;
+  line-height: 1;
+  text-align: center;
+  border-radius: 0.5rem;
+`;
+
 const ContainerItems = styled.div`
   height: 50vh;
   background-color: #fff;
@@ -75,6 +93,12 @@ const Delete = styled(DeleteIcon)`
   width: 1rem;
 `;
 
+const DeliveryDistance = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+`;
+
 const ContainerBottom = styled.div`
   margin-top: 1rem;
   display: flex;
@@ -116,8 +140,11 @@ const Cart = () => {
   const dispatch = useDispatch();
   const reduxCartData = useSelector((state) => state.cart);
   const [cartData, setCartData] = useState({});
+  const [selectedOption, setSelectedOption] = useState(
+    deliveryCharges[0].value
+  );
   useEffect(() => {
-    console.log("CARTDATA", reduxCartData);
+    console.log(reduxCartData, "CART");
     setCartData(reduxCartData);
   }, [reduxCartData]);
 
@@ -125,9 +152,24 @@ const Cart = () => {
     dispatch({ type: "REMOVE_CART_ITEM", payload: idx });
   };
 
+  const handleChange = (value) => {
+    setSelectedOption(value);
+    dispatch({ type: "ADD_Delivery", payload: value });
+  };
+
   return (
     <Container>
-      <ContainerHead>Cart</ContainerHead>
+      <ContainerHead>
+        <div>Cart</div>
+        <ClearCart
+          onClick={() => {
+            dispatch({ type: "CLEAR_CART" });
+            setSelectedOption(deliveryCharges[0].value);
+          }}
+        >
+          Clear
+        </ClearCart>
+      </ContainerHead>
       <ContainerItems>
         {cartData?.items?.map((currObj, index) => {
           return (
@@ -152,20 +194,34 @@ const Cart = () => {
           );
         })}
       </ContainerItems>
+      <DeliveryDistance>
+        <Label>Choose Delivery Location</Label>
+        <select
+          style={{ marginLeft: "1rem" }}
+          value={selectedOption}
+          onChange={(e) => handleChange(e.target.value)}
+        >
+          {deliveryCharges.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+      </DeliveryDistance>
       <ContainerBottom>
         <Back onClick={() => navigate(-1)}>back to shopping</Back>
         <CheckoutContainer>
           <PriceDetails>
             <Label>Price</Label>
-            <Amount>{cartData.totalPrice || 0}</Amount>
+            <Amount>{cartData.totalItemsPrice || 0}</Amount>
           </PriceDetails>
           <PriceDetails>
             <Label>Delivery</Label>
-            <Amount>{cartData.totalPrice || 0}</Amount>
+            <Amount>{cartData.deliveryCharge || 0}</Amount>
           </PriceDetails>
           <PriceDetails>
             <Label>Total</Label>
-            <Amount>{cartData.totalPrice || 0}</Amount>
+            <Amount>{cartData.total || 0}</Amount>
           </PriceDetails>
           <Checkout>Checkout</Checkout>
         </CheckoutContainer>

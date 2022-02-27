@@ -2,7 +2,10 @@ import { toppingsPrics } from "../../utils";
 
 const initialState = {
   items: [],
-  totalPrice: 0,
+  itemCount: 0,
+  totalItemsPrice: 0,
+  deliveryCharge: 0,
+  total: 0,
 };
 
 const getTopSum = (topArray) => {
@@ -13,7 +16,13 @@ const getTopSum = (topArray) => {
 
 const getTotalSum = (totalItem) => {
   return totalItem.reduce((acc, currObj) => {
-    const currSum = currObj?.cost || 0;
+    const currSum = currObj?.cost;
+    return acc + currSum;
+  }, 0);
+};
+const getTotalCount = (totalItem) => {
+  return totalItem.reduce((acc, currObj) => {
+    const currSum = currObj?.count;
     return acc + currSum;
   }, 0);
 };
@@ -21,14 +30,19 @@ const getTotalSum = (totalItem) => {
 const cart = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_TO_CART": {
+      //Check if item is already in cart
       const found = state.items.findIndex(
-        (currObj) => currObj?.id === action.payload.id
+        (currObj) => currObj?.id === action?.payload?.id
       );
-      const topSum = getTopSum(action.payload.top);
-      let priceParatha = topSum + 50;
+      // calculating ADD ON cost
+      const topSum = getTopSum(action?.payload?.top);
+      // calculating each Paratha price with or without add on
+      let priceParatha = Number(topSum) + Number(action?.payload?.price);
+      // creating new data to be inserted
       let newData = {};
       newData.priceParatha = priceParatha;
-      newData.top = action.payload.top;
+      newData.top = action?.payload?.top;
+      // If found calculating the cost
       if (found !== -1) {
         newData = { ...state.items[found], ...newData };
         newData.cost = priceParatha * state.items[found].count;
@@ -38,26 +52,39 @@ const cart = (state = initialState, action) => {
         newData.cost = priceParatha;
         state.items.push(newData);
       }
+      //updating the values
       const updatedPrice = getTotalSum(state.items);
+      const updatedCount = getTotalCount(state.items);
+      const updatedTotal = Number(state.deliveryCharge) + Number(updatedPrice);
       return {
         ...state,
-        totalPrice: updatedPrice,
+        totalItemsPrice: updatedPrice,
+        itemCount: updatedCount,
+        total: updatedTotal,
       };
     }
 
     case "CLEAR_CART": {
       return {
         items: [],
-        totalPrice: 0,
+        itemCount: 0,
+        totalItemsPrice: 0,
+        deliveryCharge: 0,
+        total: 0,
       };
     }
 
     case "REMOVE_CART_ITEM": {
       state.items.splice(action.payload, 1);
+      //updating the values
       const updatedPrice = getTotalSum(state.items);
+      const updatedCount = getTotalCount(state.items);
+      const updatedTotal = Number(state.deliveryCharge) + Number(updatedPrice);
       return {
         ...state,
-        totalPrice: updatedPrice,
+        totalItemsPrice: updatedPrice,
+        itemCount: updatedCount,
+        total: updatedTotal,
       };
     }
 
@@ -73,10 +100,15 @@ const cart = (state = initialState, action) => {
           state.items[found].priceParatha * (state.items[found].count + 1);
         state.items.splice(found, 1, newData);
       }
+      //updating the values
       const updatedPrice = getTotalSum(state.items);
+      const updatedCount = getTotalCount(state.items);
+      const updatedTotal = Number(state.deliveryCharge) + Number(updatedPrice);
       return {
         ...state,
-        totalPrice: updatedPrice,
+        totalItemsPrice: updatedPrice,
+        itemCount: updatedCount,
+        total: updatedTotal,
       };
     }
 
@@ -96,10 +128,30 @@ const cart = (state = initialState, action) => {
           state.items.splice(found, 1, newData);
         }
       }
+      //updating the values
       const updatedPrice = getTotalSum(state.items);
+      const updatedCount = getTotalCount(state.items);
+      const updatedTotal = Number(state.deliveryCharge) + Number(updatedPrice);
       return {
         ...state,
-        totalPrice: updatedPrice,
+        totalItemsPrice: updatedPrice,
+        itemCount: updatedCount,
+        total: updatedTotal,
+      };
+    }
+
+    case "ADD_Delivery": {
+      const newDeliveryCharge = action?.payload;
+      //updating the values
+      const updatedPrice = getTotalSum(state.items);
+      const updatedCount = getTotalCount(state.items);
+      const updatedTotal = Number(newDeliveryCharge) + Number(updatedPrice);
+      return {
+        ...state,
+        totalItemsPrice: updatedPrice,
+        itemCount: updatedCount,
+        total: updatedTotal,
+        deliveryCharge: newDeliveryCharge,
       };
     }
     default:

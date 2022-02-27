@@ -22,3 +22,10 @@ export const toppingsPrics = {
   Cabbage: 15,
   Fenugreek: 10,
 };
+
+export const deliveryCharges = [
+  { label: "Upto 5 km", value: 0 },
+  { label: "5-8 km", value: 15 },
+  { label: "9-15 km", value: 25 },
+  { label: "Above 15 km", value: 40 },
+];
