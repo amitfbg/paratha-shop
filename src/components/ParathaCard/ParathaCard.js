@@ -6,6 +6,7 @@ import MyModal from "./../Modal/index";
 import Counter from "../Counter/Counter";
 
 const Container = styled.div`
+  height: 18rem;
   flex: 15%;
   padding: 1rem;
   background-color: #f6f8fa;
