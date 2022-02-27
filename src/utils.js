@@ -1,10 +1,16 @@
-export const ParathaList = {
-  "Plain paratha + Yogurt": 40,
-  "Aalo Paratha": 50,
-  "Veg Paratha": 50,
-  "Double Cheese Paratha": 70,
-  "Corn Cheese Paratha": 80,
-};
+import PlainParathaImg from "./assets/images/paratha4.jpg";
+import AaluParathaImg from "./assets/images/paratha2.jpg";
+import VegParathaImg from "./assets/images/paratha3.jpg";
+import CheeseParathaImg from "./assets/images/paratha5.jpg";
+import CornParathaImg from "./assets/images/paratha1.jpg";
+
+export const ParathaList = [
+  { label: "Plain paratha + Yogurt", value: 40, img: PlainParathaImg },
+  { label: "Aalo Paratha", value: 50, img: AaluParathaImg },
+  { label: "Veg Paratha", value: 50, img: VegParathaImg },
+  { label: "Double Cheese Paratha", value: 70, img: CheeseParathaImg },
+  { label: "Corn Cheese Paratha", value: 80, img: CornParathaImg },
+];
 
 export const parathaToppings = {
   "Plain paratha + Yogurt": ["Extra Sauce"],

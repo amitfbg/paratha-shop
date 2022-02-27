@@ -27,6 +27,18 @@ const getTotalCount = (totalItem) => {
   }, 0);
 };
 
+const getUpdatedValues = (state) => {
+  const updatedPrice = getTotalSum(state.items);
+  const updatedCount = getTotalCount(state.items);
+  const updatedTotal = Number(state.deliveryCharge) + Number(updatedPrice);
+  return {
+    ...state,
+    totalItemsPrice: updatedPrice,
+    itemCount: updatedCount,
+    total: updatedTotal,
+  };
+};
+
 const cart = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_TO_CART": {
@@ -53,15 +65,7 @@ const cart = (state = initialState, action) => {
         state.items.push(newData);
       }
       //updating the values
-      const updatedPrice = getTotalSum(state.items);
-      const updatedCount = getTotalCount(state.items);
-      const updatedTotal = Number(state.deliveryCharge) + Number(updatedPrice);
-      return {
-        ...state,
-        totalItemsPrice: updatedPrice,
-        itemCount: updatedCount,
-        total: updatedTotal,
-      };
+      return getUpdatedValues(state);
     }
 
     case "CLEAR_CART": {
@@ -76,16 +80,11 @@ const cart = (state = initialState, action) => {
 
     case "REMOVE_CART_ITEM": {
       state.items.splice(action.payload, 1);
+      if (state.items.length === 0) {
+        state.deliveryCharge = 0;
+      }
       //updating the values
-      const updatedPrice = getTotalSum(state.items);
-      const updatedCount = getTotalCount(state.items);
-      const updatedTotal = Number(state.deliveryCharge) + Number(updatedPrice);
-      return {
-        ...state,
-        totalItemsPrice: updatedPrice,
-        itemCount: updatedCount,
-        total: updatedTotal,
-      };
+      return getUpdatedValues(state);
     }
 
     case "PLUS_CART_ITEM": {
@@ -101,15 +100,7 @@ const cart = (state = initialState, action) => {
         state.items.splice(found, 1, newData);
       }
       //updating the values
-      const updatedPrice = getTotalSum(state.items);
-      const updatedCount = getTotalCount(state.items);
-      const updatedTotal = Number(state.deliveryCharge) + Number(updatedPrice);
-      return {
-        ...state,
-        totalItemsPrice: updatedPrice,
-        itemCount: updatedCount,
-        total: updatedTotal,
-      };
+      return getUpdatedValues(state);
     }
 
     case "MINUS_CART_ITEM": {
@@ -129,15 +120,7 @@ const cart = (state = initialState, action) => {
         }
       }
       //updating the values
-      const updatedPrice = getTotalSum(state.items);
-      const updatedCount = getTotalCount(state.items);
-      const updatedTotal = Number(state.deliveryCharge) + Number(updatedPrice);
-      return {
-        ...state,
-        totalItemsPrice: updatedPrice,
-        itemCount: updatedCount,
-        total: updatedTotal,
-      };
+      return getUpdatedValues(state);
     }
 
     case "ADD_Delivery": {

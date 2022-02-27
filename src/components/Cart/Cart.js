@@ -144,7 +144,8 @@ const Cart = () => {
     deliveryCharges[0].value
   );
   useEffect(() => {
-    console.log(reduxCartData, "CART");
+    if (reduxCartData.items.length === 0)
+      setSelectedOption(deliveryCharges[0].value);
     setCartData(reduxCartData);
   }, [reduxCartData]);
 
@@ -183,7 +184,10 @@ const Cart = () => {
                   <Counter count={currObj?.count} id={currObj?.id} />
                 </div>
                 <DeleteWrap>
-                  <ParathaCard details={currObj?.id} isEdit />
+                  <ParathaCard
+                    details={{ label: currObj?.id, value: currObj?.price }}
+                    isEdit
+                  />
                 </DeleteWrap>
                 <Price>{currObj?.cost}</Price>
                 <DeleteWrap onClick={() => handleDelete(index)}>

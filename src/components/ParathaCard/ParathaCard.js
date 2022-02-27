@@ -5,7 +5,6 @@ import Toppings from "../toppings/Toppings";
 import MyModal from "./../Modal/index";
 import { parathaToppings } from "../../utils";
 import Counter from "../Counter/Counter";
-import parImg from "../../assets/images/paratha1.jpg";
 
 const Container = styled.div`
   height: 20rem;
@@ -59,14 +58,16 @@ const AddToCart = styled.div`
 
 const ParathaCard = ({ details, isEdit }) => {
   const dispatch = useDispatch();
-  const toppings = parathaToppings[details] || [];
+  const toppings = parathaToppings[details?.label] || [];
   const data = useSelector((state) => state.cart);
   const [open, setOpen] = useState(false);
   const [checkedState, setCheckedState] = useState();
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const foundIdx = data.items?.findIndex((curr) => curr?.id === details);
+    const foundIdx = data.items?.findIndex(
+      (curr) => curr?.id === details?.label
+    );
     let newAddOnList = [];
     let addOnList = [];
     if (foundIdx !== -1) {
@@ -96,7 +97,12 @@ const ParathaCard = ({ details, isEdit }) => {
       return acc;
     }, []);
 
-    const payload = { id: details, top, count: 1 };
+    const payload = {
+      id: details?.label,
+      price: details?.value,
+      top,
+      count: 1,
+    };
 
     dispatch({ type: "ADD_TO_CART", payload: payload });
     setOpen(false);
@@ -108,15 +114,15 @@ const ParathaCard = ({ details, isEdit }) => {
     }
     return (
       <Container>
-        <ContainerTop>{details}</ContainerTop>
+        <ContainerTop>{details?.label}</ContainerTop>
         <ContainerCenter>
-          <img src={parImg} />
+          <img src={details.img} alt="NA" />
         </ContainerCenter>
         <ContainerBottom>
           {count === 0 ? (
             <AddToCart onClick={() => setOpen(true)}>Add to cart</AddToCart>
           ) : (
-            <Counter count={count} id={details} />
+            <Counter count={count} id={details?.label} />
           )}
         </ContainerBottom>
       </Container>
