@@ -65,6 +65,7 @@ const WrapFlex = styled.div`
   width: 50%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   @media (max-width: 767.98px) {
     width: 100%;
   }
@@ -174,6 +175,12 @@ const Cart = () => {
     dispatch({ type: "ADD_Delivery", payload: value });
   };
 
+  const checkOutData = [
+    { label: "Price", value: cartData?.totalItemsPrice },
+    { label: "Delivery", value: cartData?.deliveryCharge },
+    { label: "Total", value: cartData?.total },
+  ];
+
   return (
     <Container>
       <ContainerHead>
@@ -198,7 +205,7 @@ const Cart = () => {
                 </Wrap>
               </WrapFlex>
               <WrapFlex>
-                <Wrap style={{ width: "10rem" }}>
+                <Wrap>
                   <Counter count={currObj?.count} id={currObj?.id} />
                 </Wrap>
                 <DeleteWrap>
@@ -216,35 +223,33 @@ const Cart = () => {
           );
         })}
       </ContainerItems>
-      <DeliveryDistance>
-        <Label>Choose Delivery Location</Label>
-        <select
-          style={{ marginLeft: "1rem" }}
-          value={selectedOption}
-          onChange={(e) => handleChange(e.target.value)}
-        >
-          {deliveryCharges.map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
-      </DeliveryDistance>
+      {cartData?.items?.length > 0 && (
+        <DeliveryDistance>
+          <Label>Choose Delivery Location</Label>
+          <select
+            style={{ marginLeft: "1rem" }}
+            value={selectedOption}
+            onChange={(e) => handleChange(e.target.value)}
+          >
+            {deliveryCharges?.map((o) => (
+              <option key={o?.value} value={o?.value}>
+                {o?.label}
+              </option>
+            ))}
+          </select>
+        </DeliveryDistance>
+      )}
       <ContainerBottom>
         <Back onClick={() => navigate(-1)}>back to shopping</Back>
         <CheckoutContainer>
-          <PriceDetails>
-            <Label>Price</Label>
-            <Amount>{cartData.totalItemsPrice || 0}</Amount>
-          </PriceDetails>
-          <PriceDetails>
-            <Label>Delivery</Label>
-            <Amount>{cartData.deliveryCharge || 0}</Amount>
-          </PriceDetails>
-          <PriceDetails>
-            <Label>Total</Label>
-            <Amount>{cartData.total || 0}</Amount>
-          </PriceDetails>
+          {checkOutData?.map(({ label, value }, idx) => {
+            return (
+              <PriceDetails key={idx}>
+                <Label>{label}</Label>
+                <Amount>{value || 0}</Amount>
+              </PriceDetails>
+            );
+          })}
           <Checkout>Checkout</Checkout>
         </CheckoutContainer>
       </ContainerBottom>
