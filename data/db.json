@@ -1,0 +1,17 @@
+{
+    "ParathaList" : [
+        { "label": "Plain paratha + Yogurt", "value": 40, "img": "paratha4.jpg" },
+        { "label": "Aalo Paratha", "value": 50, "img": "paratha2.jpg" },
+        { "label": "Veg Paratha", "value": 50, "img": "paratha3.jpg" },
+        { "label": "Double Cheese Paratha", "value": 70, "img": "paratha5.jpg" },
+        { "label": "Corn Cheese Paratha", "value": 80, "img": "paratha1.jpg" }
+      ],
+      "AddOns":{
+        "Extra Sauce": 5,
+        "Yogurt": 15,
+        "Cheese": 20,
+        "Corn": 10,
+        "Cabbage": 15,
+        "Fenugreek": 10
+      }
+}

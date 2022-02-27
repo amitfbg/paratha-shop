@@ -125,7 +125,7 @@ const ParathaCard = ({ details, isEdit }) => {
       <Container>
         <ContainerTop>{details?.label}</ContainerTop>
         <ContainerCenter>
-          <img src={details.img} alt="NA" />
+          <img src={require(`../../assets/images/${details.img}`)} alt="NA" />
         </ContainerCenter>
         <ContainerBottom>
           {count === 0 ? (
