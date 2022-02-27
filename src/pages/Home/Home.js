@@ -7,9 +7,9 @@ import { ParathaList } from "../../utils";
 const ParathaContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin: 0 1rem;
+  padding: 1rem;
   flex-wrap: wrap;
+  background-color: #1a202c;
 `;
 
 function Home() {

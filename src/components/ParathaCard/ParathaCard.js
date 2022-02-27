@@ -5,19 +5,57 @@ import Toppings from "../toppings/Toppings";
 import MyModal from "./../Modal/index";
 import { parathaToppings } from "../../utils";
 import Counter from "../Counter/Counter";
+import parImg from "../../assets/images/paratha1.jpg";
 
 const Container = styled.div`
-  height: 15rem;
-  width: 15rem;
-  background-color: aliceblue;
+  height: 20rem;
+  width: 20rem;
+  padding: 1rem;
+  background-color: #f6f8fa;
   margin: 0.5rem;
+  border: solid 1px #f6f8fa;
+  box-shadow: 1px 1px 6px #d3d3d3;
 `;
 const ContainerTop = styled.div`
-  height: 12rem;
-  width: 12rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 `;
-const ContainerBottom = styled.div``;
-const AddToCart = styled.div``;
+const ContainerCenter = styled.div`
+  height: 15rem;
+  width: 100%;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  margin: 0;
+  & > img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: auto;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+  }
+`;
+const ContainerBottom = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+`;
+const AddToCart = styled.div`
+  color: #000000;
+  min-width: 3rem;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #8fcdf4;
+  padding: 0.5rem;
+  cursor: pointer;
+  line-height: 1;
+  text-align: center;
+  border-radius: 0.5rem;
+`;
 
 const ParathaCard = ({ details, isEdit }) => {
   const dispatch = useDispatch();
@@ -71,6 +109,9 @@ const ParathaCard = ({ details, isEdit }) => {
     return (
       <Container>
         <ContainerTop>{details}</ContainerTop>
+        <ContainerCenter>
+          <img src={parImg} />
+        </ContainerCenter>
         <ContainerBottom>
           {count === 0 ? (
             <AddToCart onClick={() => setOpen(true)}>Add to cart</AddToCart>
