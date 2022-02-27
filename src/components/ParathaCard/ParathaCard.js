@@ -8,12 +8,21 @@ import Counter from "../Counter/Counter";
 
 const Container = styled.div`
   height: 20rem;
-  width: 20rem;
+  width: calc(24.8% - 3rem);
   padding: 1rem;
   background-color: #f6f8fa;
   margin: 0.5rem;
   border: solid 1px #f6f8fa;
   box-shadow: 1px 1px 6px #d3d3d3;
+  @media (max-width: 767.98px) {
+    width: 100%;
+  }
+  @media (min-width: 768px) and (max-width: 991.95px) {
+    width: calc(45% - 1rem);
+  }
+  @media (min-width: 992px) and (max-width: 1280px) {
+    width: calc(33% - 3rem);
+  }
 `;
 const ContainerTop = styled.div`
   font-size: 1.25rem;
@@ -31,7 +40,7 @@ const ContainerCenter = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
-    width: auto;
+    width: 100%;
     height: 100%;
     transform: translate(-50%, -50%);
     object-fit: contain;

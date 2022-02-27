@@ -54,15 +54,20 @@ const ProductDetails = styled.div`
   &:nth-of-type(odd) {
     background-color: #c2c2c2;
   }
+  @media (max-width: 767.98px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
-const Wrap = styled.div`
-  width: 50%;
-`;
+const Wrap = styled.div``;
 const WrapFlex = styled.div`
-  width: 100%;
+  width: 50%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  @media (max-width: 767.98px) {
+    width: 100%;
+  }
 `;
 
 const Name = styled.div`
@@ -106,6 +111,9 @@ const ContainerBottom = styled.div`
   margin-top: 1rem;
   display: flex;
   justify-content: space-between;
+  @media (max-width: 767.98px) {
+    flex-direction: column;
+  }
 `;
 const Back = styled.div`
   margin-left: 1rem;
@@ -115,11 +123,16 @@ const Back = styled.div`
 const CheckoutContainer = styled.div`
   margin-left: 20px;
   padding: 20px;
-  width: 30%;
+  width: 40%;
   background-color: #fff;
   box-shadow: 2px 2px 10px #d3d3d3;
   display: flex;
   flex-direction: column;
+  @media (max-width: 767.98px) {
+    margin-left: 0;
+    margin-top: 1rem;
+    width: auto;
+  }
 `;
 
 const PriceDetails = styled.div`
@@ -183,9 +196,11 @@ const Cart = () => {
                   <Name>{currObj?.id}</Name>
                   <AddOn>{currObj?.top?.map((curr) => curr + " ")}</AddOn>
                 </Wrap>
-                <div style={{ width: "10rem" }}>
+              </WrapFlex>
+              <WrapFlex>
+                <Wrap style={{ width: "10rem" }}>
                   <Counter count={currObj?.count} id={currObj?.id} />
-                </div>
+                </Wrap>
                 <DeleteWrap>
                   <ParathaCard
                     details={{ label: currObj?.id, value: currObj?.price }}
