@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Counter from "../Counter/Counter";
 import ParathaCard from "../ParathaCard/ParathaCard";
+import GeneralComponent from "../GeneralComponent/GeneralComponent";
 
 const ContainerItems = styled.div`
   height: 50vh;
@@ -80,33 +81,37 @@ const CartItem = ({ cartData }) => {
 
   return (
     <ContainerItems>
-      {cartData?.items?.map((currObj, index) => {
-        return (
-          <ProductDetails key={currObj?.id + index}>
-            <WrapFlex>
-              <Wrap>
-                <Name>{currObj?.id}</Name>
-                <AddOn>{currObj?.top?.map((curr) => curr + " ")}</AddOn>
-              </Wrap>
-            </WrapFlex>
-            <WrapFlex>
-              <Wrap>
-                <Counter count={currObj?.count} id={currObj?.id} />
-              </Wrap>
-              <DeleteWrap>
-                <ParathaCard
-                  details={{ label: currObj?.id, value: currObj?.price }}
-                  isEdit
-                />
-              </DeleteWrap>
-              <Price>{currObj?.cost}</Price>
-              <DeleteWrap onClick={() => handleDelete(index)}>
-                <Delete />
-              </DeleteWrap>
-            </WrapFlex>
-          </ProductDetails>
-        );
-      })}
+      {cartData?.items.length > 0 ? (
+        cartData?.items?.map((currObj, index) => {
+          return (
+            <ProductDetails key={currObj?.id + index}>
+              <WrapFlex>
+                <Wrap>
+                  <Name>{currObj?.id}</Name>
+                  <AddOn>{currObj?.top?.map((curr) => curr + " ")}</AddOn>
+                </Wrap>
+              </WrapFlex>
+              <WrapFlex>
+                <Wrap>
+                  <Counter count={currObj?.count} id={currObj?.id} />
+                </Wrap>
+                <DeleteWrap>
+                  <ParathaCard
+                    details={{ label: currObj?.id, value: currObj?.price }}
+                    isEdit
+                  />
+                </DeleteWrap>
+                <Price>{currObj?.cost}</Price>
+                <DeleteWrap onClick={() => handleDelete(index)}>
+                  <Delete />
+                </DeleteWrap>
+              </WrapFlex>
+            </ProductDetails>
+          );
+        })
+      ) : (
+        <GeneralComponent val="NoData" btnTxt={"Add Items"} />
+      )}
     </ContainerItems>
   );
 };

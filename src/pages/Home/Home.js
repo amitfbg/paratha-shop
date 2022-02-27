@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import GeneralComponent from "../../components/GeneralComponent/GeneralComponent";
 import Header from "../../components/Header/Header";
 import ParathaCard from "../../components/ParathaCard/ParathaCard";
+
+const Container = styled.div`
+  height: 100vh;
+  width: 100vw;
+`;
 
 const ParathaContainer = styled.div`
   display: flex;
@@ -46,24 +52,28 @@ function Home() {
 
   const getContent = () => {
     if (loading === 0) {
-      return <div>Loading</div>;
+      return <GeneralComponent val="Loading" />;
     }
     if (loading === -1) {
-      return <div>Error</div>;
+      return <GeneralComponent val="Error" />;
     }
     return (
       <>
         <Header />
         <ParathaContainer>
-          {parathaList?.map((currItem, idx) => {
-            return <ParathaCard details={currItem} key={currItem + idx} />;
-          })}
+          {parathaList.length > 0 ? (
+            parathaList?.map((currItem, idx) => {
+              return <ParathaCard details={currItem} key={currItem + idx} />;
+            })
+          ) : (
+            <GeneralComponent val="NoData" />
+          )}
         </ParathaContainer>
       </>
     );
   };
 
-  return getContent();
+  return <Container>{getContent()}</Container>;
 }
 
 export default Home;

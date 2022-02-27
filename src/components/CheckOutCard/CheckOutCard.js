@@ -31,7 +31,9 @@ const Checkout = styled.div`
   font-weight: bold;
   background-color: #8fcdf4;
   padding: 0.5rem;
-  cursor: pointer;
+  pointer-events: ${({ disabled }) => disabled && "none"};
+  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+  opacity: ${({ disabled }) => (disabled ? "0.5" : "1")};
   text-align: center;
   border-radius: 0.5rem;
   text-transform: capitalize;
@@ -43,6 +45,7 @@ const CheckOutCard = ({ cartData }) => {
     { label: "Delivery", value: cartData?.deliveryCharge },
     { label: "Total", value: cartData?.total },
   ];
+
   return (
     <CheckoutContainer>
       {checkOutData?.map(({ label, value }, idx) => {
@@ -53,7 +56,7 @@ const CheckOutCard = ({ cartData }) => {
           </PriceDetails>
         );
       })}
-      <Checkout>Checkout</Checkout>
+      <Checkout disabled={cartData?.items?.length === 0}>Checkout</Checkout>
     </CheckoutContainer>
   );
 };

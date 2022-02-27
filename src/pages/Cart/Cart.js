@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CartItem from "../../components/CartItem/CartItem";
 import CheckOutCard from "../../components/CheckOutCard/CheckOutCard";
+import GeneralComponent from "../../components/GeneralComponent/GeneralComponent";
 
 const Container = styled.div`
   background-color: #f1f3f6;
@@ -91,54 +92,51 @@ const Cart = () => {
 
   const getContent = () => {
     if (loading === 0) {
-      return <div>Loading</div>;
+      return <GeneralComponent val="Loading" />;
     }
     if (loading === -1) {
-      return <div>Loading</div>;
-    }
-    if (cartData.items.length > 0) {
-      return (
-        <Container>
-          <ContainerHead>
-            <div>Cart</div>
-            <ClearCart
-              onClick={() => {
-                dispatch({ type: "CLEAR_CART" });
-                setSelectedOption(deliveryCharges[0].value);
-              }}
-            >
-              Clear
-            </ClearCart>
-          </ContainerHead>
-          <CartItem cartData={cartData} />
-          {cartData?.items?.length > 0 && (
-            <DeliveryDistance>
-              <Label>Choose Delivery Location</Label>
-              <select
-                style={{ marginLeft: "1rem" }}
-                value={selectedOption}
-                onChange={(e) => handleChange(e.target.value)}
-              >
-                {deliveryCharges?.map((o) => (
-                  <option key={o?.value} value={o?.value}>
-                    {o?.label}
-                  </option>
-                ))}
-              </select>
-            </DeliveryDistance>
-          )}
-          <ContainerBottom>
-            <Back onClick={() => navigate(-1)}>back to shopping</Back>
-            <CheckOutCard cartData={cartData} />
-          </ContainerBottom>
-        </Container>
-      );
+      return <GeneralComponent val="Error" />;
     }
 
-    return <div>No data</div>;
+    return (
+      <>
+        <ContainerHead>
+          <div>Cart</div>
+          <ClearCart
+            onClick={() => {
+              dispatch({ type: "CLEAR_CART" });
+              setSelectedOption(deliveryCharges[0].value);
+            }}
+          >
+            Clear
+          </ClearCart>
+        </ContainerHead>
+        <CartItem cartData={cartData} />
+        {cartData?.items?.length > 0 && (
+          <DeliveryDistance>
+            <Label>Choose Delivery Location</Label>
+            <select
+              style={{ marginLeft: "1rem" }}
+              value={selectedOption}
+              onChange={(e) => handleChange(e.target.value)}
+            >
+              {deliveryCharges?.map((o) => (
+                <option key={o?.value} value={o?.value}>
+                  {o?.label}
+                </option>
+              ))}
+            </select>
+          </DeliveryDistance>
+        )}
+        <ContainerBottom>
+          <Back onClick={() => navigate(-1)}>back to shopping</Back>
+          <CheckOutCard cartData={cartData} />
+        </ContainerBottom>
+      </>
+    );
   };
 
-  return getContent();
+  return <Container>{getContent()}</Container>;
 };
 
 export default Cart;
