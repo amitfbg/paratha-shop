@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import Toppings from "../toppings/Toppings";
 import MyModal from "./../Modal/index";
-import { parathaToppings } from "../../utils";
 import Counter from "../Counter/Counter";
 
 const Container = styled.div`
@@ -67,6 +66,8 @@ const AddToCart = styled.div`
 
 const ParathaCard = ({ details, isEdit }) => {
   const dispatch = useDispatch();
+  const { addOnPrice: toppingsPrices, parathaAddOn: parathaToppings } =
+    useSelector((state) => state?.addOnReducer);
   const toppings = parathaToppings[details?.label] || [];
   const data = useSelector((state) => state.cart);
   const [open, setOpen] = useState(false);
@@ -111,6 +112,7 @@ const ParathaCard = ({ details, isEdit }) => {
       price: details?.value,
       top,
       count: 1,
+      toppingsPrices,
     };
 
     dispatch({ type: "ADD_TO_CART", payload: payload });

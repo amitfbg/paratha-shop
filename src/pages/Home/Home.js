@@ -22,14 +22,19 @@ function Home() {
     Promise.all([
       fetch("http://localhost:3001/ParathaList").then((value) => value.json()),
       fetch("http://localhost:3001/AddOns").then((value) => value.json()),
+      fetch("http://localhost:3001/ParathasAddOns").then((value) =>
+        value.json()
+      ),
     ])
       .then((data) => {
-        console.log(data);
         if (data[0].length) {
           setParathaList(data[0]);
         }
         if (data[1]) {
-          dispatch({ type: "ADD_ADD_ON", payload: data[1] });
+          dispatch({ type: "SET_ADD_ON_PRICE", payload: data[1] });
+        }
+        if (data[2]) {
+          dispatch({ type: "SET_PARATHAS_ADD_ON", payload: data[2] });
         }
         setLoading(1);
       })

@@ -1,5 +1,3 @@
-import { toppingsPrics } from "../../utils";
-
 const initialState = {
   items: [],
   itemCount: 0,
@@ -8,9 +6,9 @@ const initialState = {
   total: 0,
 };
 
-const getTopSum = (topArray) => {
+const getTopSum = (topArray, toppingsPrices) => {
   return topArray.reduce((acc, curr) => {
-    return acc + toppingsPrics[curr];
+    return acc + toppingsPrices[curr];
   }, 0);
 };
 
@@ -47,7 +45,10 @@ const cart = (state = initialState, action) => {
         (currObj) => currObj?.id === action?.payload?.id
       );
       // calculating ADD ON cost
-      const topSum = getTopSum(action?.payload?.top);
+      const topSum = getTopSum(
+        action?.payload?.top,
+        action?.payload?.toppingsPrices
+      );
       // calculating each Paratha price with or without add on
       let priceParatha = Number(topSum) + Number(action?.payload?.price);
       // creating new data to be inserted
