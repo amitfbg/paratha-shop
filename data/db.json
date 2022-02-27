@@ -20,6 +20,12 @@
         "Veg Paratha": ["Corn", "Cabbage", "Fenugreek", "Cheese"],
         "Double Cheese Paratha": ["Extra Sauce", "Yogurt", "Corn"],
         "Corn Cheese Paratha": ["Extra Sauce", "Yogurt", "Cheese"]
-      }
+      },
+      "DeliveryChargesList":[
+        { "label": "Upto 5 km", "value": 0 },
+        { "label": "5-8 km", "value": 15 },
+        { "label": "9-15 km", "value": 25 },
+        { "label": "Above 15 km", "value": 40 }
+      ]
 
 }

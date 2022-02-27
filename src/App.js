@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import store from "./react-redux-store/store/configureStore";
 import "./App.css";
 import Home from "./pages/Home/Home.js";
-import Cart from "./components/Cart/Cart.js";
+import Cart from "./pages/Cart/Cart";
 
 function App() {
   return (
