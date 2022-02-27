@@ -3,6 +3,7 @@ import styled from "styled-components";
 import HourglassEmptySharpIcon from "@material-ui/icons/HourglassEmptySharp";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import SpeakerNotesOff from "@material-ui/icons/SpeakerNotesOff";
+import DoneIcon from "@material-ui/icons/Done";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -21,6 +22,11 @@ const Container = styled.div`
 const Error = styled(ErrorOutlineIcon)``;
 
 const EmptyData = styled(SpeakerNotesOff)``;
+const Done = styled(DoneIcon)`
+  svg {
+    fill: green;
+  }
+`;
 
 const Wrap = styled.div`
   display: flex;
@@ -88,6 +94,16 @@ const GeneralComponent = ({ val, btnTxt }) => {
           <BackButton onClick={() => navigate(-1)}>
             {btnTxt || "Back"}
           </BackButton>
+        </ButtonWrap>
+      );
+    if (val === "Done")
+      return (
+        <ButtonWrap>
+          <Wrap>
+            <Done />
+            <Label>Order Successful</Label>
+          </Wrap>
+          <BackButton onClick={() => navigate("/")}>Home</BackButton>
         </ButtonWrap>
       );
   };

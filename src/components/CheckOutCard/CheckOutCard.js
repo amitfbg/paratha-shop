@@ -39,7 +39,7 @@ const Checkout = styled.div`
   text-transform: capitalize;
 `;
 
-const CheckOutCard = ({ cartData }) => {
+const CheckOutCard = ({ cartData, handleSubmit }) => {
   const checkOutData = [
     { label: "Price", value: cartData?.totalItemsPrice },
     { label: "Delivery", value: cartData?.deliveryCharge },
@@ -56,7 +56,9 @@ const CheckOutCard = ({ cartData }) => {
           </PriceDetails>
         );
       })}
-      <Checkout disabled={cartData?.items?.length === 0}>Checkout</Checkout>
+      <Checkout disabled={cartData?.items?.length === 0} onClick={handleSubmit}>
+        Checkout
+      </Checkout>
     </CheckoutContainer>
   );
 };

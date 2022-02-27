@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import CartItem from "../../components/CartItem/CartItem";
 import CheckOutCard from "../../components/CheckOutCard/CheckOutCard";
 import GeneralComponent from "../../components/GeneralComponent/GeneralComponent";
+import axios from "axios";
 
 const Container = styled.div`
   background-color: #f1f3f6;
@@ -90,6 +91,19 @@ const Cart = () => {
     dispatch({ type: "ADD_Delivery", payload: value });
   };
 
+  const handleSubmit = () => {
+    setLoading(0);
+    axios
+      .post("http://localhost:3001/Order", cartData)
+      .then((resp) => {
+        dispatch({ type: "CLEAR_CART" });
+        setLoading("postSuccess");
+      })
+      .catch((error) => {
+        setLoading("postError");
+      });
+  };
+
   const getContent = () => {
     if (loading === 0) {
       return <GeneralComponent val="Loading" />;
@@ -97,17 +111,18 @@ const Cart = () => {
     if (loading === -1) {
       return <GeneralComponent val="Error" />;
     }
+    if (loading === "postSuccess") {
+      return <GeneralComponent val="Done" />;
+    }
+    if (loading === "postError") {
+      return <GeneralComponent val="Error" btnTxt="Back" />;
+    }
 
     return (
       <>
         <ContainerHead>
           <div>Cart</div>
-          <ClearCart
-            onClick={() => {
-              dispatch({ type: "CLEAR_CART" });
-              setSelectedOption(deliveryCharges[0].value);
-            }}
-          >
+          <ClearCart onClick={() => dispatch({ type: "CLEAR_CART" })}>
             Clear
           </ClearCart>
         </ContainerHead>
@@ -130,7 +145,7 @@ const Cart = () => {
         )}
         <ContainerBottom>
           <Back onClick={() => navigate(-1)}>back to shopping</Back>
-          <CheckOutCard cartData={cartData} />
+          <CheckOutCard cartData={cartData} handleSubmit={handleSubmit} />
         </ContainerBottom>
       </>
     );
