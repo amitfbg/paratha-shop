@@ -6,24 +6,24 @@
 
 In the project directory, you can run:
 
-### `yarn dev` or `npm dev`
+### `yarn dev` or `npm run dev`
 
 Runs both the json-server as well as the app.
 json-server will run on 3001 and the app will run on 3000.
 
-### `npm start` or `yarn start`
+### `npm run start` or `yarn start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 You will see error message as the data we are getting from a fake api.
-To get data from fake api first we need to run `yarn json-server` or `npm json-server` once it starts
-then run `npm start` or `yarn start`
+To get data from fake api first we need to run `yarn json-server` or `npm run json-server` once it starts
+then run `npm run start` or `yarn start`
 
-### `yarn json-server` or `npm json-server`
+### `yarn json-server` or `npm run json-server`
 
 This will only start the json-server on Port 3001.
-To start app run `npm start` or `yarn start`
+To start app run `npm run start` or `yarn start`
 
 ### `npm test`
 
