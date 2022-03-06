@@ -32,7 +32,7 @@ const cart = (state = initialState, action) => {
       newData.priceParatha = Number(action?.payload?.price);
       newData.top = action?.payload?.top;
 
-      // If found calculating the cost
+      // If found update
       if (found !== -1) {
         newData = { ...state.items[found], ...newData };
         state.items[found] = { ...state.items[found], ...newData };
