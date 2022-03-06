@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const CheckoutContainer = styled.div`
@@ -40,10 +41,41 @@ const Checkout = styled.div`
 `;
 
 const CheckOutCard = ({ cartData, handleSubmit }) => {
+  const { addOnPrice: toppingsPrices } = useSelector(
+    (state) => state?.addOnReducer
+  );
+
+  const [price, setPrice] = useState(0);
+
+  const getTopSum = (topArray) => {
+    return topArray.reduce((acc, curr) => {
+      return acc + toppingsPrices[curr];
+    }, 0);
+  };
+
+  const getCostOfParatha = (currParatha) => {
+    // calculating ADD ON cost
+    const topSum = getTopSum(currParatha?.top);
+    // calculating each Paratha price with or without add on
+    let priceParatha = Number(topSum) + Number(currParatha?.price);
+    let cost = Number(priceParatha * currParatha.count);
+    return cost || 0;
+  };
+
+  useEffect(() => {
+    const getTotalSum = (totalItem) => {
+      return totalItem.reduce((acc, currObj) => {
+        const currSum = getCostOfParatha(currObj);
+        return acc + Number(currSum);
+      }, 0);
+    };
+    setPrice(getTotalSum(cartData?.items));
+  }, [cartData]);
+
   const checkOutData = [
-    { label: "Price", value: cartData?.totalItemsPrice },
+    { label: "Price", value: price },
     { label: "Delivery", value: cartData?.deliveryCharge },
-    { label: "Total", value: cartData?.total },
+    { label: "Total", value: Number(cartData?.deliveryCharge + price) },
   ];
 
   return (

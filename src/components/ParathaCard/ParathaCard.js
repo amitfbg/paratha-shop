@@ -66,8 +66,9 @@ const AddToCart = styled.div`
 
 const ParathaCard = ({ details, isEdit }) => {
   const dispatch = useDispatch();
-  const { addOnPrice: toppingsPrices, parathaAddOn: parathaToppings } =
-    useSelector((state) => state?.addOnReducer);
+  const { parathaAddOn: parathaToppings } = useSelector(
+    (state) => state?.addOnReducer
+  );
   const toppings = parathaToppings[details?.label] || [];
   const data = useSelector((state) => state.cart);
   const [open, setOpen] = useState(false);
@@ -112,7 +113,6 @@ const ParathaCard = ({ details, isEdit }) => {
       price: details?.value,
       top,
       count: 1,
-      toppingsPrices,
     };
 
     dispatch({ type: "ADD_TO_CART", payload: payload });
