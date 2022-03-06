@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Counter from "../Counter/Counter";
 import ParathaCard from "../ParathaCard/ParathaCard";
@@ -74,6 +74,24 @@ const Delete = styled(DeleteIcon)`
 
 const CartItem = ({ cartData }) => {
   const dispatch = useDispatch();
+  const { addOnPrice: toppingsPrices } = useSelector(
+    (state) => state?.addOnReducer
+  );
+
+  const getTopSum = (topArray) => {
+    return topArray.reduce((acc, curr) => {
+      return acc + toppingsPrices[curr];
+    }, 0);
+  };
+
+  const getCostOfParatha = (currParatha) => {
+    // calculating ADD ON cost
+    const topSum = getTopSum(currParatha?.top);
+    // calculating each Paratha price with or without add on
+    let priceParatha = Number(topSum) + Number(currParatha?.price);
+    let cost = Number(priceParatha * currParatha.count);
+    return cost || 0;
+  };
 
   const handleDelete = (idx) => {
     dispatch({ type: "REMOVE_CART_ITEM", payload: idx });
@@ -101,7 +119,7 @@ const CartItem = ({ cartData }) => {
                     isEdit
                   />
                 </DeleteWrap>
-                <Price>{currObj?.cost}</Price>
+                <Price>{getCostOfParatha(currObj)}</Price>
                 <DeleteWrap onClick={() => handleDelete(index)}>
                   <Delete />
                 </DeleteWrap>
